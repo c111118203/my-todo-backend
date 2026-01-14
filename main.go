@@ -1,11 +1,13 @@
 package main
 
 import (
+	"os"
 	"net/http"
 	"github.com/gin-contrib/cors"   // CORS 套件
 	"github.com/gin-gonic/gin"      // Gin 框架
 	"github.com/glebarez/sqlite"    // 純 Go 版 SQLite (Windows 友善)
 	"gorm.io/gorm"                  // GORM ORM
+	
 )
 
 // Todo 結構體定義
@@ -89,6 +91,12 @@ func main() {
 		
 		c.JSON(http.StatusOK, gin.H{"message": "ID " + id + " 已成功永久刪除"})
 	})
-	// 4. 啟動伺服器
-	router.Run(":8080")
+	// 取得雲端平台分配的 Port，如果沒有則預設 8080
+		port := os.Getenv("PORT")
+		if port == "" {
+			port = "8080"
+		}
+
+		// 啟動伺服器，改為 ":"+port
+		router.Run(":" + port)
 }
