@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<body>
+  <h2>API 連線測試</h2>
+  <button onclick="fetchData()">點我抓取 Go 資料</button>
+  <pre id="output"></pre>
+
+  <script>
+    async function fetchData() {
+      const response = await fetch('http://localhost:8080/todos');
+      const data = await response.json();
+      document.getElementById('output').innerText = JSON.stringify(data, null, 2);
+    }
+  </script>
+</body>
+</html>
